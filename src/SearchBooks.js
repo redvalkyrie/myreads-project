@@ -1,69 +1,59 @@
-import React, { Component }	 from 'react'
-import PropTypes from 'prop-types'
+import React, {Component} from 'react'
+import { Link } from 'react-router-dom'
+import ListBooks from './ListBooks'
 import * as BooksAPI from './BooksAPI'
 
-class ListBooks extends Component {
-  state = {
-    options: [
-      {
-        name: 'Move To...',
-        value: null,
-      },
-      {
-        name: 'Currently Reading',
-        value: 'currentlyReading',
-      },
-      {
-        name: 'Want to Read',
-        value: 'wantToRead',
-      },
-      {
-        name: 'Read',
-        value: 'read',
-      },
-      {
-        name: 'None',
-        value: null
-      },
-    ],
-    value: '?',
-  };
-	handleChange = (event) => {
-      this.setState({ value: event.target.value });
-      BooksAPI.update(this, this.state.value)
-    };
-  static propTypes = {
-    books: PropTypes.array.isRequired
-  }
-  render() {
-    const { options, value } = this.state;
-    return (
-      <div className="bookshelf-books">
-      <ol className='books-grid'>
-    	  {this.props.books.map( (book) => (
-    		<li key={book.id}>
-      			<div className="book">
-                    <div className="book-top">
-                       <div className="book-cover" style={{ width: 128, height: 193, 										backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
-                            <div className="book-shelf-changer">
-                              <select onChange={this.handleChange} value={value}>
-								{options.map(item => (
-									<option key={item.value ? (item.value) : (item.name)} value={item.value}>
-										{item.name}
-									</option>
-								))}
-                              </select>
-                            </div>
-                          </div>
-                        	 <div className="book-title">{book.title}</div>
-                      	    <div className="book-authors">{book.authors}</div>
-                    	  </div>
-						</li>
-    				))}
-      			</ol>
-			</div>
- 		 )
+class SearchBooks extends Component {
+	state = {
+      query: '',
+      searchResults: []
+    }
+	updateQuery = (query) => {
+    	let trimmedQuery = query.replace(/^\s+/, '')
+  		this.setState({
+    		query: trimmedQuery
+ 	 	})
 	}
-}
 
-export default ListBooks
+  render() {
+    const { books } = this.props
+
+    if(this.state.query) {
+      console.log(this.state.query)
+      BooksAPI.search(this.state.query).then(books => {
+        console.log(books)
+        this.setState({ books })
+
+      })
+
+    } else {
+      this.state.searchResults=books
+    }
+    return (
+      <div>
+	    <div className="search-books">
+       <div className="search-books-bar">
+         <Link
+          className="close-search"
+          to="/"
+          onClick={() => this.setState({ screen: 'list' })}
+          >Close
+        </Link>
+      	<input
+			     className="search-books-input-wrapper"
+			     type="text"
+			     placeholder="Search by title or author"
+           value={this.state.query}
+  			   onChange={(event) => this.updateQuery(event.target.value)}
+		     />
+      </div>
+    </div>
+    <div className="bookshelf">
+      <h2 className="bookshelf-title">Search Results</h2>
+        <ListBooks books={this.state.searchResults}/>
+    </div>
+    </div>
+   )
+  }
+}
+export default SearchBooks

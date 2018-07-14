@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
+import { Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './App.css'
 import ListBooks from './ListBooks'
 import SearchBooks from './SearchBooks'
@@ -12,7 +14,7 @@ class BooksApp extends Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false,
+    screen: 'list', //list, search
     allBooks: [],
     currentlyReading: [
       {
@@ -38,7 +40,7 @@ class BooksApp extends Component {
       	}))
       })
     }
-	componentDidMount() {
+	componentWillMount() {
       BooksAPI.getAll().then( (allBooks)=>{
       	this.setState( { allBooks })
 	  })
@@ -47,9 +49,7 @@ class BooksApp extends Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <SearchBooks showSearchPage={this.state.showSearchPage}/>
-        ) : (
+        {this.state.screen === 'list' && (
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
@@ -60,7 +60,7 @@ class BooksApp extends Component {
                   <h2 className="bookshelf-title">All Books</h2>
                     <ListBooks books={this.state.allBooks}/>
                 </div>
-				<div className="bookshelf">
+				          <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                 </div>
                 <div className="bookshelf">
@@ -74,9 +74,15 @@ class BooksApp extends Component {
               </div>
             </div>
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link
+                to="/search"
+                onClick={() => this.setState({screen: 'search'})}
+                >Add a book</Link>
             </div>
           </div>
+        )}
+        {this.state.screen === 'search' && (
+          <SearchBooks books={this.state.allBooks}/>
         )}
       </div>
     )

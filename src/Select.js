@@ -7,7 +7,7 @@ class Select extends Component {
     options: [
       {
         name: 'Move To...',
-        value: null,
+        value: '',
       },
       {
         name: 'Currently Reading',
@@ -23,21 +23,22 @@ class Select extends Component {
       },
       {
         name: 'None',
-        value: null
+        value: ''
       },
     ],
-    value: '?',
+    selectedOption: '',
   };
 	handleChange = (event) => {
-      this.setState({ value: event.target.value });
-      BooksAPI.update(this, this.state.value)
+      console.log('events value', event.target.value)
+      this.setState({ selectedOption: event.target.value });
+      console.log('selectedOption', this.state.selectedOption)
     };
 
   render() {
-    const { options, value } = this.state;
+    const { options, selectedOption } = this.state;
     return (
            <div className="book-shelf-changer">
-        <select onChange={this.handleChange} value={value}>
+        <select onChange={this.handleChange} value={this.state.selectedOption}>
 					{options.map(item => (
 							<option key={item.value ? (item.value) : (item.name)} value={item.value}>
 								{item.name}
