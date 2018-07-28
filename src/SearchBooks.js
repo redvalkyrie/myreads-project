@@ -9,16 +9,12 @@ class SearchBooks extends Component {
       searchResults: []
     }
 	updateQuery = (query) => {
+		const { books } = this.props
     	let trimmedQuery = query.replace(/^\s+/, '')
   		this.setState({
     		query: trimmedQuery
  	 	})
-	}
-
-  render() {
-    const { books } = this.props
-
-    if(this.state.query) {
+		if(this.state.query) {
       console.log(this.state.query)
       BooksAPI.search(this.state.query).then(books => {
         console.log(books)
@@ -29,6 +25,10 @@ class SearchBooks extends Component {
     } else {
       this.state.searchResults=books
     }
+	}
+
+  render() {
+		const {changed} = this.props;
     return (
       <div>
 	    <div className="search-books">
@@ -36,7 +36,7 @@ class SearchBooks extends Component {
          <Link
           className="close-search"
           to="/"
-          onClick={() => this.setState({ screen: 'list' })}
+          onClick={changed}
           >Close
         </Link>
       	<input

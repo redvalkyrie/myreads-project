@@ -14,7 +14,7 @@ class BooksApp extends Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    screen: 'list', //list, search
+    screen: 'list',
     allBooks: [],
     currentlyReading: [
       {
@@ -33,6 +33,7 @@ class BooksApp extends Component {
     wantToRead: [],
     read: [],
   }
+
 	moveTocurrentlyReading= (book) => {
       BooksAPI.update(book).then(book => {
       	this.setState(state => ({
@@ -44,12 +45,25 @@ class BooksApp extends Component {
       BooksAPI.getAll().then( (allBooks)=>{
       	this.setState( { allBooks })
 	  })
-	}
+    }
+  toggleSearchHandler = () => {
+    let currentScreen = this.state.screen;
+    console.log("states current screen state is ", currentScreen);
+    if (currentScreen === 'list') {
+      currentScreen = 'search';
+      this.setState({screen: currentScreen});
+      console.log("states current screen state is ", currentScreen);
+    } else {
+      currentScreen = 'list';
+      this.setState({screen: currentScreen});
+      console.log("states current screen state is ", currentScreen);
+    }
+  }
 
   render() {
     return (
       <div className="app">
-        {this.state.screen === 'list' && (
+        {this.state.screen === 'list' ? (
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
@@ -76,14 +90,14 @@ class BooksApp extends Component {
             <div className="open-search">
               <Link
                 to="/search"
-                onClick={() => this.setState({screen: 'search'})}
+                className="search-button"
+                onClick={this.toggleSearchHandler}
                 >Add a book</Link>
             </div>
           </div>
-        )}
-        {this.state.screen === 'search' && (
-          <SearchBooks books={this.state.allBooks}/>
-        )}
+        ) :
+          <SearchBooks books={this.state.allBooks} changed={this.toggleSearchHandler}/>
+        }
       </div>
     )
   }
