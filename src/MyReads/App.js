@@ -15,6 +15,7 @@ class BooksApp extends Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     screen: 'list',
+    searchResults: '',
     allBooks: [],
     currentlyReading: [
       {
@@ -96,7 +97,17 @@ class BooksApp extends Component {
             </div>
           </div>
         ) :
-          <SearchBooks books={this.state.allBooks} changed={this.toggleSearchHandler}/>
+        <div className="list-books">
+          <div className="list-books-title">
+            <h1>MyReads</h1>
+          </div>
+          <div className="list-books-content">
+            <SearchBooks
+              books={this.state.allBooks}
+              changed={this.toggleSearchHandler}
+              searchResults={this.state.searchResults}/>
+          </div>
+        </div>
         }
       </div>
     )
