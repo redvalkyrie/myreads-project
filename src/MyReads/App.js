@@ -33,6 +33,7 @@ class BooksApp extends Component {
     ],
     wantToRead: [],
     read: [],
+    searchResultsList: []
   }
 
 	moveTocurrentlyReading= (book) => {
@@ -47,6 +48,13 @@ class BooksApp extends Component {
       	this.setState( { allBooks })
 	  })
     }
+
+  // componentDidUpdate() {
+  //   BooksAPI.search(this.state.searchResults).then( (searchResultsList) => {
+  //     this.setState( { searchResultsList })
+  //   })
+  //   console.log(this.state.searchResultsList)
+  // }
   toggleSearchHandler = () => {
     let currentScreen = this.state.screen;
     console.log("states current screen state is ", currentScreen);
@@ -61,7 +69,19 @@ class BooksApp extends Component {
     }
   }
 
+  searchResultsHandler = (event) => {
+    this.setState({ searchResults: event.target.value })
+    BooksAPI.search(this.state.searchResults).then( (searchResultsList) => {
+        this.setState( { searchResultsList })
+      })
+      console.log(this.state.searchResultsList)
+  }
+
   render() {
+    let searchCheck;
+    if(this.state.searchResultsList) {
+      searchCheck = <ListBooks books={this.state.searchResultsList} />
+    }
     return (
       <div className="app">
         <div className="list-books">
@@ -98,7 +118,14 @@ class BooksApp extends Component {
                 <SearchBooks
                   books={this.state.allBooks}
                   changed={this.toggleSearchHandler}
-                  searchResults={this.state.searchResults}/>
+                  searchResults={this.searchResultsHandler}/>
+                <div className="search-books-results">
+        			    <div className="bookshelf">
+        			      <h2 className="bookshelf-title">Search Results</h2>
+                    <p> Search results are {this.state.searchResults} </p>
+                    {searchCheck}
+        			    </div>
+        				</div>
               </div>
             }
           </div>
