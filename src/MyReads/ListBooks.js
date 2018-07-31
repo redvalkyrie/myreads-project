@@ -1,11 +1,17 @@
 import React, { Component }	 from 'react'
 import PropTypes from 'prop-types'
 import Select from './Select'
+import * as BooksAPI from './BooksAPI'
 
 class ListBooks extends Component {
 
   static propTypes = {
     books: PropTypes.array.isRequired
+  }
+  componentWillMount() {
+      BooksAPI.getAll().then( (books)=>{
+      	this.setState( { books })
+	  })
   }
   render() {
 

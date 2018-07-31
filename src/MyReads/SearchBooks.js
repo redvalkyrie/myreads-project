@@ -15,7 +15,8 @@ const SearchBooks = (props) => {
         </Link>
       	<input
 			     className="search-books-input-wrapper"
-			     type="text"
+			     type="search"
+					 placeholder="Search by title or author"
   			   onChange={props.searchResults}
 		     />
       </div>

@@ -17,20 +17,7 @@ class BooksApp extends Component {
     screen: 'list',
     searchResults: '',
     allBooks: [],
-    currentlyReading: [
-      {
-        "id": "PGR2AwAAQBAJ",
-        "title": "To Kill a Mockingbird",
-        "authors": "Harper Lee",
-        "smallThumbnail": "http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api"
-      },
-      {
-        "id": "uu1mC6zWNTwC",
-        "title": "1776",
-        "authors": "David McCullough",
-        "smallThumbnail": "http://books.google.com/books/content?id=uu1mC6zWNTwC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73pGHfBNSsJG9Y8kRBpmLUft9O4BfItHioHolWNKOdLavw-SLcXADy3CPAfJ0_qMb18RmCa7Ds1cTdpM3dxAGJs8zfCfm8c6ggBIjzKT7XR5FIB53HHOhnsT7a0Cc-PpneWq9zX&source=gbs_api"
-      }
-    ],
+    currentlyReading: [],
     wantToRead: [],
     read: [],
     searchResultsList: []
@@ -49,12 +36,6 @@ class BooksApp extends Component {
 	  })
     }
 
-  // componentDidUpdate() {
-  //   BooksAPI.search(this.state.searchResults).then( (searchResultsList) => {
-  //     this.setState( { searchResultsList })
-  //   })
-  //   console.log(this.state.searchResultsList)
-  // }
   toggleSearchHandler = () => {
     let currentScreen = this.state.screen;
     console.log("states current screen state is ", currentScreen);
@@ -64,23 +45,26 @@ class BooksApp extends Component {
       console.log("states current screen state is ", currentScreen);
     } else {
       currentScreen = 'list';
-      this.setState({screen: currentScreen});
+      this.setState({screen: currentScreen, searchResults: '', searchResultsList: []});
       console.log("states current screen state is ", currentScreen);
     }
   }
 
   searchResultsHandler = (event) => {
-    this.setState({ searchResults: event.target.value })
+    this.setState({ searchResults: event.target.value})
     BooksAPI.search(this.state.searchResults).then( (searchResultsList) => {
         this.setState( { searchResultsList })
       })
-      console.log(this.state.searchResultsList)
   }
 
   render() {
     let searchCheck;
+    console.log('searchResults', this.state.searchResults)
+    console.log('searchResultsList', this.state.searchResultsList)
     if(this.state.searchResultsList) {
       searchCheck = <ListBooks books={this.state.searchResultsList} />
+    } else {
+      searchCheck = <p>No results to display!</p>
     }
     return (
       <div className="app">
@@ -96,6 +80,7 @@ class BooksApp extends Component {
                 </div>
       	        <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
+                  <ListBooks books={this.state.currentlyReading} />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
@@ -122,7 +107,7 @@ class BooksApp extends Component {
                 <div className="search-books-results">
         			    <div className="bookshelf">
         			      <h2 className="bookshelf-title">Search Results</h2>
-                    <p> Search results are {this.state.searchResults} </p>
+                    <p> searchResults is {this.state.searchResults}</p>
                     {searchCheck}
         			    </div>
         				</div>
