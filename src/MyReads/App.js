@@ -64,52 +64,45 @@ class BooksApp extends Component {
   render() {
     return (
       <div className="app">
-        {this.state.screen === 'list' ? (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">All Books</h2>
-                    <ListBooks books={this.state.allBooks}/>
-                </div>
-				          <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-               	  <ListBooks books={this.state.wantToRead}/>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-          			<ListBooks books={this.state.read}/>
-                </div>
-              </div>
-            </div>
-            <div className="open-search">
-              <Link
-                to="/search"
-                className="search-button"
-                onClick={this.toggleSearchHandler}
-                >Add a book</Link>
-            </div>
-          </div>
-        ) :
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
           </div>
-          <div className="list-books-content">
-            <SearchBooks
-              books={this.state.allBooks}
-              changed={this.toggleSearchHandler}
-              searchResults={this.state.searchResults}/>
+            {this.state.screen === 'list' ? (
+              <div className="list-books-content">
+                <div className="bookshelf">
+                  <h2 className="bookshelf-title">All Books</h2>
+                  <ListBooks books={this.state.allBooks} />
+                </div>
+      	        <div className="bookshelf">
+                  <h2 className="bookshelf-title">Currently Reading</h2>
+                </div>
+                <div className="bookshelf">
+                  <h2 className="bookshelf-title">Want to Read</h2>
+               	  <ListBooks books={this.state.wantToRead} />
+                </div>
+                <div className="bookshelf">
+                  <h2 className="bookshelf-title">Read</h2>
+          			     <ListBooks books={this.state.read} />
+                </div>
+                <div className="open-search">
+                  <Link
+                    to="/search"
+                    className="search-button"
+                    onClick={this.toggleSearchHandler}
+                    >Add a book</Link>
+                </div>
+              </div>
+            ) :
+              <div className="list-books-content">
+                <SearchBooks
+                  books={this.state.allBooks}
+                  changed={this.toggleSearchHandler}
+                  searchResults={this.state.searchResults}/>
+              </div>
+            }
           </div>
         </div>
-        }
-      </div>
     )
   }
 }

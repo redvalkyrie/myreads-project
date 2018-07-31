@@ -52,7 +52,6 @@ body, .app {
 .bookshelf {
   padding: 0 10px 20px;
 }
-
 @media (min-width: 600px) {
   .bookshelf {
     padding: 0 20px 40px;
@@ -86,11 +85,15 @@ body, .app {
 }
 
 /* search page */
-
+.search-books {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
 .search-books-bar {
   position: fixed;
   width: 100%;
-  top: 10%;
+  top: calc(4.4em);
   left: 0;
   z-index: 5;
   display: flex;

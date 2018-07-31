@@ -48,12 +48,12 @@ class SearchBooks extends Component {
 	  			   onChange={(event) => this.updateQuery(event.target.value)}
 			     />
 	      </div>
-	    </div>
-			<div className="search-books-results">
-		    <div className="bookshelf">
-		      <h2 className="bookshelf-title">Search Results</h2>
-		        <ListBooks books={this.state.searchResults}/>
-		    </div>
+				<div className="search-books-results">
+			    <div className="bookshelf">
+			      <h2 className="bookshelf-title">Search Results</h2>
+			        <ListBooks books={this.state.searchResults}/>
+			    </div>
+				</div>
 			</div>
     </div>
    )
