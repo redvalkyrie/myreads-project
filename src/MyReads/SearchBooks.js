@@ -18,6 +18,7 @@ const SearchBooks = (props) => {
 			     type="search"
 					 placeholder="Search by title or author"
   			   onChange={props.searchResults}
+           aria-label="Search by title or author"
 		     />
       </div>
 		</div>

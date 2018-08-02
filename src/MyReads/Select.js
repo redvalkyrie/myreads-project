@@ -30,8 +30,10 @@ class Select extends Component {
   };
 	handleChange = (event) => {
       console.log('events value', event.target.value)
-      this.setState({ selectedOption: event.target.value });
-      console.log('selectedOption', this.state.selectedOption)
+      let theOption = event.target.value;
+      this.setState({selectedOption: theOption});
+      console.log('selectedOption', this.state.selectedOption);
+      this.props.moveTocurrentlyReading(this.props.book, event.target.value);
     };
 
   render() {

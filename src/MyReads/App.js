@@ -23,14 +23,15 @@ class BooksApp extends Component {
     searchResultsList: []
   }
 
-	moveTocurrentlyReading= (book) => {
-      BooksAPI.update(book).then(book => {
-      	this.setState(state => ({
-        currentlyReading: state.currentlyReading.concat([ book ])
-      	}))
-      })
+	moveTocurrentlyReading= (book, shelf) => {
+    console.log("moveTocurrentlyReading has been activated")
+    console.log("The targeted books id is: ", book.id)
+    let targetedBookIndex= this.state.allBooks.indexOf(book);
+    console.log("targetedBook is: ", targetedBookIndex)
+    console.log("The targeted shelf is: ", shelf)
     }
-	componentWillMount() {
+
+	componentDidMount() {
       BooksAPI.getAll().then( (allBooks)=>{
       	this.setState( { allBooks })
 	  })
@@ -76,7 +77,8 @@ class BooksApp extends Component {
               <div className="list-books-content">
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">All Books</h2>
-                  <ListBooks books={this.state.allBooks} />
+                  <ListBooks books={this.state.allBooks}
+                    moveTocurrentlyReading={this.moveTocurrentlyReading}/>
                 </div>
       	        <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
