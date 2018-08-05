@@ -33,7 +33,7 @@ class Select extends Component {
       let theOption = event.target.value;
       this.setState({selectedOption: theOption});
       console.log('selectedOption', this.state.selectedOption);
-      this.props.moveTocurrentlyReading(this.props.book, event.target.value);
+      this.props.moveTocurrentlyReading(this.props.book, this.props.bookShelf, event.target.value);
     };
 
   render() {

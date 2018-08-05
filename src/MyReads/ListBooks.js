@@ -14,8 +14,8 @@ class ListBooks extends Component {
 	  })
   }
   render() {
-    let bookShelf;
-    console.log("ListBooks component called", this.props.books)
+    let bookShelf = this.props.bookShelf;
+    console.log("ListBooks component called", bookShelf)
 
     return (
       <div className="bookshelf-books">
@@ -29,7 +29,8 @@ class ListBooks extends Component {
                         alt={book.title}></div>
                             <Select title="Move to"
                               moveTocurrentlyReading={this.props.moveTocurrentlyReading}
-                              book={book}/>
+                              book={book}
+                              bookShelf={bookShelf}/>
                           </div>
                         	 <div className="book-title">{book.title}</div>
                       	    <div className="book-authors">{book.authors}</div>

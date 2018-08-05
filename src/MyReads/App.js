@@ -23,9 +23,10 @@ class BooksApp extends Component {
     searchResultsList: []
   }
 
-	moveTocurrentlyReading= (book, shelf) => {
+	moveTocurrentlyReading= (book, currentBookShelf, shelf) => {
     console.log("moveTocurrentlyReading has been activated")
     console.log("The targeted books id is: ", book.id)
+    console.log("This books current shelf is: ", currentBookShelf)
     let targetedBookIndex= this.state.allBooks.indexOf(book);
     console.log("targetedBook is: ", targetedBookIndex)
     console.log("The targeted shelf is: ", shelf)
@@ -56,14 +57,26 @@ class BooksApp extends Component {
     BooksAPI.search(this.state.searchResults).then( (searchResultsList) => {
         this.setState( { searchResultsList })
       })
+    if(this.state.searchResults === '') {
+      this.setState({ searchResultsList: [] })
+    }
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if(this.state.searchResultsList !== nextState.searchResultsList) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   render() {
     let searchCheck;
     console.log('searchResults', this.state.searchResults)
     console.log('searchResultsList', this.state.searchResultsList)
     if(this.state.searchResultsList) {
-      searchCheck = <ListBooks books={this.state.searchResultsList} />
+      searchCheck = <ListBooks books={this.state.searchResultsList}
+                      bookShelf='searchResultsList'/>
     } else {
       searchCheck = <p>No results to display!</p>
     }
@@ -78,19 +91,23 @@ class BooksApp extends Component {
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">All Books</h2>
                   <ListBooks books={this.state.allBooks}
-                    moveTocurrentlyReading={this.moveTocurrentlyReading}/>
+                    moveTocurrentlyReading={this.moveTocurrentlyReading}
+                    bookShelf='allBooks'/>
                 </div>
       	        <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
-                  <ListBooks books={this.state.currentlyReading} />
+                  <ListBooks books={this.state.currentlyReading}
+                  bookShelf='currentlyReading' />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
-               	  <ListBooks books={this.state.wantToRead} />
+               	  <ListBooks books={this.state.wantToRead}
+                  bookShelf='wantToRead' />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
-          			     <ListBooks books={this.state.read} />
+          			     <ListBooks books={this.state.read}
+                        bookShelf='read'/>
                 </div>
                 <div className="open-search">
                   <Link
