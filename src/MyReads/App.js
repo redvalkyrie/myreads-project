@@ -25,53 +25,57 @@ class BooksApp extends Component {
 
 	bookShelfChangeHandler= (book, currentBookShelf, shelf) => {
     console.log("bookShelfChangeHandler has been activated")
-    console.log("The targeted books id is: ", book.id)
     console.log("This books current shelf is: ", currentBookShelf)
-    let targetedBookIndex= this.state.allBooks.indexOf(book);
-    console.log("targetedBook is: ", targetedBookIndex)
     console.log("The targeted shelf is: ", shelf)
     let arrayHolder;
-    // BooksAPI.update(book, shelf).then()
-    switch(currentBookShelf){
-      case "allBooks":
-        console.log("This book will move from ", currentBookShelf);
-        arrayHolder = this.state.allBooks.filter( t => t !== book);
-        this.setState({ allBooks: arrayHolder})
-        break;
-      case "wantToRead":
-        console.log("This book will move from ", currentBookShelf);
-        arrayHolder = this.state.wantToRead.filter( t => t !== book);
-        this.setState({ wantToRead: arrayHolder})
-        break;
-      case "read":
-        console.log("This book will move from ", currentBookShelf);
-        arrayHolder = this.state.read.filter( t => t !== book);
-        this.setState({ read: arrayHolder})
-        break;
-      case "searchResultsList":
-        console.log("This book will move from ", currentBookShelf);
-        arrayHolder = this.state.searchResultsList.filter( t => t !== book);
-        this.setState({ searchResultsList: arrayHolder})
-        break;
-      default:
-        break;
-    }
-    switch(shelf){
-      case "currentlyReading":
-        console.log("This book will move to ", shelf);
-        this.setState( {currentlyReading: this.state.currentlyReading.concat( [book] )});
-        break;
-      case "wantToRead":
-        console.log("This book will move to ", shelf);
-        this.setState( {wantToRead: this.state.wantToRead.concat( [book] )});
-        break;
-      case "read":
-        console.log("This book will move to ", shelf);
-        this.setState( {read: this.state.read.concat( [book] )});
-        break;
-      default:
-        break;
-
+    if(currentBookShelf != shelf) {
+      switch(currentBookShelf){
+        case "allBooks":
+          console.log("This book will move from ", currentBookShelf);
+          arrayHolder = this.state.allBooks.filter( t => t !== book);
+          this.setState({ allBooks: arrayHolder})
+          console.log(this.state.allBooks)
+          break;
+          case "currentlyReading":
+            console.log("This book will move from ", currentBookShelf);
+            arrayHolder = this.state.currentlyReading.filter( t => t !== book);
+            this.setState({ currentlyReading: arrayHolder })
+            console.log(this.state.currentlyReading)
+            break;
+        case "wantToRead":
+          console.log("This book will move from ", currentBookShelf);
+          arrayHolder = this.state.wantToRead.filter( t => t !== book);
+          this.setState({ wantToRead: arrayHolder})
+          break;
+        case "read":
+          console.log("This book will move from ", currentBookShelf);
+          arrayHolder = this.state.read.filter( t => t !== book);
+          this.setState({ read: arrayHolder})
+          break;
+        case "searchResultsList":
+          console.log("This book will move from ", currentBookShelf);
+          arrayHolder = this.state.searchResultsList.filter( t => t !== book);
+          this.setState({ searchResultsList: arrayHolder})
+          break;
+        default:
+          break;
+      }
+      switch(shelf){
+        case "currentlyReading":
+          console.log("This book will move to ", shelf);
+          this.setState( {currentlyReading: this.state.currentlyReading.concat( [book] )});
+          break;
+        case "wantToRead":
+          console.log("This book will move to ", shelf);
+          this.setState( {wantToRead: this.state.wantToRead.concat( [book] )});
+          break;
+        case "read":
+          console.log("This book will move to ", shelf);
+          this.setState( {read: this.state.read.concat( [book] )});
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -99,6 +103,7 @@ class BooksApp extends Component {
     this.setState({ searchResults: event.target.value})
     BooksAPI.search(this.state.searchResults).then( (searchResultsList) => {
         this.setState( { searchResultsList })
+        console.log(this.state.searchResultsList)
       })
     if(this.state.searchResults === '') {
       this.setState({ searchResultsList: [] })
@@ -108,7 +113,7 @@ class BooksApp extends Component {
     let searchCheck;
     console.log('searchResults', this.state.searchResults)
     console.log('searchResultsList', this.state.searchResultsList)
-    if(this.state.searchResultsList) {
+    if(this.state.searchResultsList && this.state.searchResultsList !== []) {
       searchCheck = <ListBooks books={this.state.searchResultsList}
                       bookShelf='searchResultsList'
                       bookShelfChangeHandler={this.bookShelfChangeHandler}/>

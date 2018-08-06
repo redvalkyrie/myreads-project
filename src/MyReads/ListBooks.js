@@ -13,20 +13,14 @@ class ListBooks extends Component {
       	this.setState( { books })
 	  })
   }
-  // componentDidUpdate(){
-  //   BooksAPI.getAll().then( (books) => {
-  //     this.setState( {books})
-  //   })
-  // }
   render() {
     let bookShelf = this.props.bookShelf;
-    console.log("ListBooks component called", bookShelf)
     let displayBooks;
     if(this.props.books === undefined || this.props.books.length == null || this.props.books.length == 0) {
       displayBooks = <p> This shelf is empty!</p>
     } else {
       displayBooks =
-      <ol className='books-grid'>
+      <ul className='books-grid'>
     	  {this.props.books.map( (book) => (
     		<li key={book.id}>
       			<div className="book">
@@ -44,9 +38,8 @@ class ListBooks extends Component {
                     	  </div>
 						</li>
     				))}
-      			</ol>
+      			</ul>
     }
-    console.log(this.props.books)
     return (
       <div className="bookshelf-books">
       {displayBooks}
