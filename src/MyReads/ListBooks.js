@@ -5,20 +5,27 @@ import * as BooksAPI from './BooksAPI'
 
 class ListBooks extends Component {
 
-  static propTypes = {
-    books: PropTypes.array.isRequired
-  }
+  // static propTypes = {
+  //   books: PropTypes.array.isRequired
+  // }
   componentDidMount() {
       BooksAPI.getAll().then( (books)=>{
       	this.setState( { books })
 	  })
   }
+  // componentDidUpdate(){
+  //   BooksAPI.getAll().then( (books) => {
+  //     this.setState( {books})
+  //   })
+  // }
   render() {
     let bookShelf = this.props.bookShelf;
     console.log("ListBooks component called", bookShelf)
-
-    return (
-      <div className="bookshelf-books">
+    let displayBooks;
+    if(this.props.books === undefined || this.props.books.length == null || this.props.books.length == 0) {
+      displayBooks = <p> This shelf is empty!</p>
+    } else {
+      displayBooks =
       <ol className='books-grid'>
     	  {this.props.books.map( (book) => (
     		<li key={book.id}>
@@ -28,7 +35,7 @@ class ListBooks extends Component {
                         style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}
                         alt={book.title}></div>
                             <Select title="Move to"
-                              moveTocurrentlyReading={this.props.moveTocurrentlyReading}
+                              bookShelfChangeHandler={this.props.bookShelfChangeHandler}
                               book={book}
                               bookShelf={bookShelf}/>
                           </div>
@@ -38,6 +45,11 @@ class ListBooks extends Component {
 						</li>
     				))}
       			</ol>
+    }
+    console.log(this.props.books)
+    return (
+      <div className="bookshelf-books">
+      {displayBooks}
 			</div>
  		 )
 	}

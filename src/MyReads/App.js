@@ -23,14 +23,57 @@ class BooksApp extends Component {
     searchResultsList: []
   }
 
-	moveTocurrentlyReading= (book, currentBookShelf, shelf) => {
-    console.log("moveTocurrentlyReading has been activated")
+	bookShelfChangeHandler= (book, currentBookShelf, shelf) => {
+    console.log("bookShelfChangeHandler has been activated")
     console.log("The targeted books id is: ", book.id)
     console.log("This books current shelf is: ", currentBookShelf)
     let targetedBookIndex= this.state.allBooks.indexOf(book);
     console.log("targetedBook is: ", targetedBookIndex)
     console.log("The targeted shelf is: ", shelf)
+    let arrayHolder;
+    // BooksAPI.update(book, shelf).then()
+    switch(currentBookShelf){
+      case "allBooks":
+        console.log("This book will move from ", currentBookShelf);
+        arrayHolder = this.state.allBooks.filter( t => t !== book);
+        this.setState({ allBooks: arrayHolder})
+        break;
+      case "wantToRead":
+        console.log("This book will move from ", currentBookShelf);
+        arrayHolder = this.state.wantToRead.filter( t => t !== book);
+        this.setState({ wantToRead: arrayHolder})
+        break;
+      case "read":
+        console.log("This book will move from ", currentBookShelf);
+        arrayHolder = this.state.read.filter( t => t !== book);
+        this.setState({ read: arrayHolder})
+        break;
+      case "searchResultsList":
+        console.log("This book will move from ", currentBookShelf);
+        arrayHolder = this.state.searchResultsList.filter( t => t !== book);
+        this.setState({ searchResultsList: arrayHolder})
+        break;
+      default:
+        break;
     }
+    switch(shelf){
+      case "currentlyReading":
+        console.log("This book will move to ", shelf);
+        this.setState( {currentlyReading: this.state.currentlyReading.concat( [book] )});
+        break;
+      case "wantToRead":
+        console.log("This book will move to ", shelf);
+        this.setState( {wantToRead: this.state.wantToRead.concat( [book] )});
+        break;
+      case "read":
+        console.log("This book will move to ", shelf);
+        this.setState( {read: this.state.read.concat( [book] )});
+        break;
+      default:
+        break;
+
+    }
+  }
 
 	componentDidMount() {
       BooksAPI.getAll().then( (allBooks)=>{
@@ -61,22 +104,14 @@ class BooksApp extends Component {
       this.setState({ searchResultsList: [] })
     }
   }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if(this.state.searchResultsList !== nextState.searchResultsList) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   render() {
     let searchCheck;
     console.log('searchResults', this.state.searchResults)
     console.log('searchResultsList', this.state.searchResultsList)
     if(this.state.searchResultsList) {
       searchCheck = <ListBooks books={this.state.searchResultsList}
-                      bookShelf='searchResultsList'/>
+                      bookShelf='searchResultsList'
+                      bookShelfChangeHandler={this.bookShelfChangeHandler}/>
     } else {
       searchCheck = <p>No results to display!</p>
     }
@@ -91,22 +126,25 @@ class BooksApp extends Component {
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">All Books</h2>
                   <ListBooks books={this.state.allBooks}
-                    moveTocurrentlyReading={this.moveTocurrentlyReading}
+                    bookShelfChangeHandler={this.bookShelfChangeHandler}
                     bookShelf='allBooks'/>
                 </div>
       	        <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <ListBooks books={this.state.currentlyReading}
+                  bookShelfChangeHandler={this.bookShelfChangeHandler}
                   bookShelf='currentlyReading' />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Want to Read</h2>
                	  <ListBooks books={this.state.wantToRead}
+                  bookShelfChangeHandler={this.bookShelfChangeHandler}
                   bookShelf='wantToRead' />
                 </div>
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
           			     <ListBooks books={this.state.read}
+                     bookShelfChangeHandler={this.bookShelfChangeHandler}
                         bookShelf='read'/>
                 </div>
                 <div className="open-search">
