@@ -14,7 +14,6 @@ class BooksApp extends Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    screen: 'list',
     searchResults: '',
     allBooks: [],
     currentlyReading: [],
@@ -28,7 +27,7 @@ class BooksApp extends Component {
     console.log("This books current shelf is: ", currentBookShelf)
     console.log("The targeted shelf is: ", shelf)
     let arrayHolder;
-    if(currentBookShelf != shelf) {
+    if(currentBookShelf !== shelf) {
       switch(currentBookShelf){
         case "allBooks":
           console.log("This book will move from ", currentBookShelf);
@@ -83,20 +82,12 @@ class BooksApp extends Component {
       BooksAPI.getAll().then( (allBooks)=>{
       	this.setState( { allBooks })
 	  })
-    }
+    console.log("The current screen is ", this.state.screen)
+  }
 
   toggleSearchHandler = () => {
-    let currentScreen = this.state.screen;
-    console.log("states current screen state is ", currentScreen);
-    if (currentScreen === 'list') {
-      currentScreen = 'search';
-      this.setState({screen: currentScreen});
-      console.log("states current screen state is ", currentScreen);
-    } else {
-      currentScreen = 'list';
-      this.setState({screen: currentScreen, searchResults: '', searchResultsList: []});
-      console.log("states current screen state is ", currentScreen);
-    }
+    console.log("toggleSearchHandler has been activated")
+    this.setState({searchResults: '', searchResultsList: []});
   }
 
   searchResultsHandler = (event) => {
@@ -110,29 +101,19 @@ class BooksApp extends Component {
     }
   }
   render() {
-    let searchCheck;
-    console.log('searchResults', this.state.searchResults)
-    console.log('searchResultsList', this.state.searchResultsList)
-    if(this.state.searchResultsList && this.state.searchResultsList !== []) {
-      searchCheck = <ListBooks books={this.state.searchResultsList}
-                      bookShelf='searchResultsList'
-                      bookShelfChangeHandler={this.bookShelfChangeHandler}/>
-    } else {
-      searchCheck = <p>No results to display!</p>
-    }
     return (
       <div className="app">
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-            {this.state.screen === 'list' ? (
-              <div className="list-books-content">
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">All Books</h2>
-                  <ListBooks books={this.state.allBooks}
-                    bookShelfChangeHandler={this.bookShelfChangeHandler}
-                    bookShelf='allBooks'/>
+        <div className="list-books-title">
+          <h1>MyReads</h1>
+        </div>
+        <Route exact path="/" render={() => (
+          <div className="list-books">
+            <div className="list-books-content">
+              <div className="bookshelf">
+                <h2 className="bookshelf-title">All Books</h2>
+                <ListBooks books={this.state.allBooks}
+                  bookShelfChangeHandler={this.bookShelfChangeHandler}
+                  bookShelf='allBooks'/>
                 </div>
       	        <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
@@ -149,8 +130,8 @@ class BooksApp extends Component {
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Read</h2>
           			     <ListBooks books={this.state.read}
-                     bookShelfChangeHandler={this.bookShelfChangeHandler}
-                        bookShelf='read'/>
+                      bookShelfChangeHandler={this.bookShelfChangeHandler}
+                      bookShelf='read'/>
                 </div>
                 <div className="open-search">
                   <Link
@@ -158,25 +139,22 @@ class BooksApp extends Component {
                     className="search-button"
                     onClick={this.toggleSearchHandler}
                     >Add a book</Link>
+                  </div>
                 </div>
               </div>
-            ) :
+
+            )} />
+            <Route path="/search" render={()=> (
               <div className="list-books-content">
                 <SearchBooks
-                  books={this.state.allBooks}
-                  changed={this.toggleSearchHandler}
-                  searchResults={this.searchResultsHandler}/>
-                <div className="search-books-results">
-        			    <div className="bookshelf">
-        			      <h2 className="bookshelf-title">Search Results</h2>
-                    <p> searchResults is {this.state.searchResults}</p>
-                    {searchCheck}
-        			    </div>
-        				</div>
+                  onToggleSearchHandler={this.toggleSearchHandler}
+                  searchResultsHandler={this.searchResultsHandler}
+                  searchResults={this.state.searchResults}
+                  searchResultsList={this.state.searchResultsList}
+                  bookShelfChangeHandler={this.bookShelfChangeHandler}/>
               </div>
-            }
-          </div>
-        </div>
+            )} />
+      </div>
     )
   }
 }

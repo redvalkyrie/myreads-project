@@ -41,9 +41,8 @@ class Select extends Component {
 
   render() {
     const { options, selectedOption } = this.state;
-    let checkedOption;
     return (
-           <div className="book-shelf-changer">
+      <div className="book-shelf-changer">
         <select onChange={this.handleChange} value={this.state.selectedOption}>
 					{options.map(item => (
 							<option key={item.value} value={item.value}>
