@@ -8,18 +8,10 @@ import SearchBooks from './SearchBooks'
 
 class BooksApp extends Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    searchResults: '',
     allBooks: [],
     currentlyReading: [],
     wantToRead: [],
-    read: [],
-    searchResultsList: []
+    read: []
   }
 
 	bookShelfChangeHandler= (book, currentBookShelf, shelf) => {
@@ -51,11 +43,6 @@ class BooksApp extends Component {
           arrayHolder = this.state.read.filter( t => t !== book);
           this.setState({ read: arrayHolder})
           break;
-        case "searchResultsList":
-          console.log("This book will move from ", currentBookShelf);
-          arrayHolder = this.state.searchResultsList.filter( t => t !== book);
-          this.setState({ searchResultsList: arrayHolder})
-          break;
         default:
           break;
       }
@@ -83,22 +70,6 @@ class BooksApp extends Component {
       	this.setState( { allBooks })
 	  })
     console.log("The current screen is ", this.state.screen)
-  }
-
-  toggleSearchHandler = () => {
-    console.log("toggleSearchHandler has been activated")
-    this.setState({searchResults: '', searchResultsList: []});
-  }
-
-  searchResultsHandler = (event) => {
-    this.setState({ searchResults: event.target.value})
-    BooksAPI.search(this.state.searchResults).then( (searchResultsList) => {
-        this.setState( { searchResultsList })
-        console.log(this.state.searchResultsList)
-      })
-    if(this.state.searchResults === '') {
-      this.setState({ searchResultsList: [] })
-    }
   }
   render() {
     return (
@@ -137,7 +108,7 @@ class BooksApp extends Component {
                   <Link
                     to="/search"
                     className="search-button"
-                    onClick={this.toggleSearchHandler}
+                  //  onClick={this.toggleSearchHandler}
                     >Add a book</Link>
                   </div>
                 </div>
@@ -148,9 +119,6 @@ class BooksApp extends Component {
               <div className="list-books-content">
                 <SearchBooks
                   onToggleSearchHandler={this.toggleSearchHandler}
-                  searchResultsHandler={this.searchResultsHandler}
-                  searchResults={this.state.searchResults}
-                  searchResultsList={this.state.searchResultsList}
                   bookShelfChangeHandler={this.bookShelfChangeHandler}/>
               </div>
             )} />

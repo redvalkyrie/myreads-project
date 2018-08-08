@@ -1,14 +1,38 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import ListBooks from './ListBooks'
+import * as BooksAPI from './BooksAPI'
 
 class SearchBooks extends Component {
+  state = {
+    searchQuery: '',
+    searchResultsList: []
+  }
+
+  // componentWillUnmount() {
+  //   this.setState({this.props.searchQuery: '', this.props.searchResultsList: []})
+  // }
+  searchResultsHandler = (query) => {
+    this.setState({ searchQuery: query})
+    if(query) {
+      BooksAPI.search(query).then( (searchResultsList) => {
+        if(searchResultsList.error) {
+          this.setState( { searchResultsList: [] });
+        } else {
+          this.setState({ searchResultsList: searchResultsList })
+        }
+          console.log(this.state.searchResultsList)
+      })
+    } else {
+      this.setState({ searchResultsList: [] })
+    }
+  }
   render() {
     let searchCheck;
-    console.log('searchResults', this.props.searchResults)
-    console.log('searchResultsList', this.props.searchResultsList)
-    if(this.props.searchResultsList && this.props.searchResultsList !== []) {
-      searchCheck = <ListBooks books={this.props.searchResultsList}
+    console.log('searchResults', this.state.searchQuery)
+    console.log('searchResultsList', this.state.searchResultsList)
+    if(this.state.searchQuery && this.state.searchResultsList !== []) {
+      searchCheck = <ListBooks books={this.state.searchResultsList}
                       bookShelf='searchResultsList'
                       bookShelfChangeHandler={this.props.bookShelfChangeHandler}/>
     } else {
@@ -22,14 +46,15 @@ class SearchBooks extends Component {
            <Link
             className="close-search"
             to="/"
-            onClick={this.props.onToggleSearchHandler}
+            //onClick={this.props.onToggleSearchHandler}
             >Close
           </Link>
         	<input
   			     className="search-books-input-wrapper"
   			     type="search"
   					 placeholder="Search by title or author"
-    			   onChange={this.props.searchResultsHandler}
+             value={this.state.searchQuery || ""}
+    			   onChange={(event) => this.searchResultsHandler(event.target.value)}
              aria-label="Search by title or author"
   		     />
         </div>
@@ -37,7 +62,7 @@ class SearchBooks extends Component {
       <div className="search-books-results">
         <div className="bookshelf">
           <h2 className="bookshelf-title">Search Results</h2>
-          <p> searchResults is {this.props.searchResults}</p>
+          <p> searchResults is {this.state.searchQuery}</p>
           {searchCheck}
         </div>
       </div>

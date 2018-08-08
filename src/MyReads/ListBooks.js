@@ -5,14 +5,14 @@ import * as BooksAPI from './BooksAPI'
 
 class ListBooks extends Component {
 
-  static propTypes = {
-    books: PropTypes.array.isRequired
-  }
-  componentDidMount() {
-      BooksAPI.getAll().then( (books)=>{
-      	this.setState( { books })
-	  })
-  }
+  // static propTypes = {
+  //   books: PropTypes.array.isRequired
+  // }
+  // componentDidMount() {
+  //     BooksAPI.getAll().then( (books)=>{
+  //     	this.setState( { books })
+	//   })
+  // }
   render() {
     let bookShelf = this.props.bookShelf;
     let displayBooks;
