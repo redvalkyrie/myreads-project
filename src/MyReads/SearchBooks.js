@@ -31,19 +31,19 @@ class SearchBooks extends Component {
     if(this.state.searchQuery && this.state.searchResultsList !== []) {
       searchCheck = <ListBooks books={this.state.searchResultsList}
                       bookShelf='none'
-                      bookShelfChangeHandler={this.props.bookShelfChangeHandler}/>
+                      bookShelfChangeHandler={this.props.bookShelfChangeHandler}
+                      moveShelf={this.props.moveShelf}/>
     } else {
       searchCheck = <p>No results to display!</p>
     }
 
     return (
-      <div>
+      <div className="list-books-content">
   	    <div className="search-books">
          <div className="search-books-bar">
            <Link
             className="close-search"
             to="/"
-            //onClick={this.props.onToggleSearchHandler}
             >Close
           </Link>
         	<input
