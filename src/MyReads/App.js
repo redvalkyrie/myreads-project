@@ -69,7 +69,6 @@ class BooksApp extends Component {
       BooksAPI.getAll().then( (allBooks)=>{
       	this.setState( { allBooks })
 	  })
-    console.log("The current screen is ", this.state.screen)
   }
   render() {
     return (

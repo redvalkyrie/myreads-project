@@ -24,15 +24,10 @@ class Select extends Component {
       {
         name: 'None',
         value: 'none'
-      },
-    ],
-    selectedOption: '',
-  };
+      }
+    ]
+  }
 	handleChange = (event) => {
-      console.log('events value', event.target.value)
-      let theOption = event.target.value;
-      this.setState({selectedOption: theOption});
-      console.log('selectedOption', this.state.selectedOption)
       console.log(event.target.value)
       if(event.target.value !== 'move' && event.target.value !== 'none'){
           this.props.bookShelfChangeHandler(this.props.book, this.props.bookShelf, event.target.value);
@@ -40,10 +35,10 @@ class Select extends Component {
     };
 
   render() {
-    const { options, selectedOption } = this.state;
+    const { options} = this.state;
     return (
       <div className="book-shelf-changer">
-        <select onChange={this.handleChange} value={this.state.selectedOption}>
+        <select onChange={this.handleChange} value={this.props.bookShelf}>
 					{options.map(item => (
 							<option key={item.value} value={item.value}>
 								{item.name}

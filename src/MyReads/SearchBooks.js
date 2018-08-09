@@ -9,9 +9,6 @@ class SearchBooks extends Component {
     searchResultsList: []
   }
 
-  // componentWillUnmount() {
-  //   this.setState({this.props.searchQuery: '', this.props.searchResultsList: []})
-  // }
   searchResultsHandler = (query) => {
     this.setState({ searchQuery: query})
     if(query) {
@@ -33,7 +30,7 @@ class SearchBooks extends Component {
     console.log('searchResultsList', this.state.searchResultsList)
     if(this.state.searchQuery && this.state.searchResultsList !== []) {
       searchCheck = <ListBooks books={this.state.searchResultsList}
-                      bookShelf='searchResultsList'
+                      bookShelf='none'
                       bookShelfChangeHandler={this.props.bookShelfChangeHandler}/>
     } else {
       searchCheck = <p>No results to display!</p>
