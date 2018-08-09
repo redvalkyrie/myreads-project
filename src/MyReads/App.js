@@ -79,12 +79,7 @@ class BooksApp extends Component {
         <Route exact path="/" render={() => (
           <div className="list-books">
             <div className="list-books-content">
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">All Books</h2>
-                <ListBooks books={this.state.allBooks}
-                  bookShelfChangeHandler={this.bookShelfChangeHandler}
-                  bookShelf='allBooks'/>
-                </div>
+          
       	        <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <ListBooks books={this.state.currentlyReading}

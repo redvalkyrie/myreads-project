@@ -8,15 +8,15 @@ class ListBooks extends Component {
   // static propTypes = {
   //   books: PropTypes.array.isRequired
   // }
-  // componentDidMount() {
-  //     BooksAPI.getAll().then( (books)=>{
-  //     	this.setState( { books })
-	//   })
-  // }
+  componentDidMount() {
+      BooksAPI.getAll().then( (books)=>{
+      	this.setState( { books })
+	  })
+  }
   render() {
     let bookShelf = this.props.bookShelf;
     let displayBooks;
-    if(this.props.books === undefined || this.props.books.length === null || this.props.books.length === 0) {
+    if(this.props.books === undefined || this.props.books.length == null || this.props.books.length == 0) {
       displayBooks = <p> This shelf is empty!</p>
     } else {
       displayBooks =

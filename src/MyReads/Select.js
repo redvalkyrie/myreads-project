@@ -3,30 +3,7 @@ import * as BooksAPI from './BooksAPI'
 
 
 class Select extends Component {
-  state = {
-    options: [
-      {
-        name: 'Move To...',
-        value: 'move',
-      },
-      {
-        name: 'Currently Reading',
-        value: 'currentlyReading',
-      },
-      {
-        name: 'Want to Read',
-        value: 'wantToRead',
-      },
-      {
-        name: 'Read',
-        value: 'read',
-      },
-      {
-        name: 'None',
-        value: 'none'
-      }
-    ]
-  }
+
 	handleChange = (event) => {
       console.log(event.target.value)
       if(event.target.value !== 'move' && event.target.value !== 'none'){
@@ -35,15 +12,14 @@ class Select extends Component {
     };
 
   render() {
-    const { options} = this.state;
     return (
       <div className="book-shelf-changer">
         <select onChange={this.handleChange} value={this.props.bookShelf}>
-					{options.map(item => (
-							<option key={item.value} value={item.value}>
-								{item.name}
-							</option>
-					))}
+          <option value="move" disabled>Move to...</option>
+          <option value="currentlyReading">Currently Reading</option>
+          <option value="wantToRead">Want to Read</option>
+          <option value="read">Read</option>
+          <option value="none">None</option>
         </select>
 			</div>
  		 )
