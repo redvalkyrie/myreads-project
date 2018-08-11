@@ -13,9 +13,8 @@ class ListBooks extends Component {
     		  <li key={book.id}>
             <Book
               moveShelf={this.props.moveShelf}
-              bookShelfChangeHandler={this.props.bookShelfChangeHandler}
               book={book}
-              bookShelf={this.props.bookShelf}/>
+              bookShelf={book.bookShelf}/>
 				  </li>
     		))}
   	  </ul>

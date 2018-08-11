@@ -18,20 +18,36 @@ class SearchBooks extends Component {
         } else {
           this.setState({ searchResultsList: searchResultsList })
         }
-          console.log(this.state.searchResultsList)
+          this.shelfChecker(this.props.allBooks, this.state.searchResultsList)
       })
     } else {
       this.setState({ searchResultsList: [] })
     }
   }
+
+  shelfChecker = (mainList, queryList) => {
+    console.log("searchChecker has been activated.")
+    queryList.map((book) => {
+      let bookShelf = 'none';
+      console.log("this book is ", book)
+      let mainIndex = mainList.indexOf(book.id)
+      console.log("mainIndex is ", mainIndex)
+      if(mainIndex > -1) {
+        let mainBook = mainList[mainIndex];
+        console.log("mainBook is ",mainBook)
+        bookShelf = mainBook.bookShelf;
+      }
+      book.bookShelf = bookShelf;
+      return queryList;
+    })
+  }
+
   render() {
     let searchCheck;
     console.log('searchResults', this.state.searchQuery)
     console.log('searchResultsList', this.state.searchResultsList)
     if(this.state.searchQuery && this.state.searchResultsList !== []) {
       searchCheck = <ListBooks books={this.state.searchResultsList}
-                      bookShelf='none'
-                      bookShelfChangeHandler={this.props.bookShelfChangeHandler}
                       moveShelf={this.props.moveShelf}/>
     } else {
       searchCheck = <p>No results to display!</p>

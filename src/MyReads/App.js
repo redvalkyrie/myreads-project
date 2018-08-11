@@ -16,7 +16,6 @@ class BooksApp extends Component {
       book.bookShelf=targetShelf;
       this.setState(state => ({allBooks: state.allBooks.filter(b => b.id !== book.id).concat([book])}))
     })
-    console.log("allBooks is currently", this.state.allBooks)
   }
 
 	componentDidMount() {
@@ -39,8 +38,8 @@ class BooksApp extends Component {
             <Route path="/search" render={()=> (
                 <SearchBooks
                   onToggleSearchHandler={this.toggleSearchHandler}
-                  bookShelfChangeHandler={this.bookShelfChangeHandler}
-                  moveShelf={this.moveShelf}/>
+                  moveShelf={this.moveShelf}
+                  allBooks={this.state.allBooks}/>
 
             )} />
       </div>
