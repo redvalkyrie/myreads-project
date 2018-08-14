@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import ListBooks from './ListBooks'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
 
@@ -49,7 +48,6 @@ class SearchBooks extends Component {
           <h2 className="bookshelf-title">Search Results</h2>
           <p> searchResults is {this.state.searchQuery}</p>
           <ul className='books-grid'>
-            //checks books to see if on a bookshelf in main page
             {this.state.searchResultsList.map( book => {
               let bookShelf = 'none';
               this.props.allBooks.map(b => (

@@ -11,7 +11,6 @@ const Book = (props) => {
         </div>
             <Select title="Move to"
               moveShelf={props.moveShelf}
-              bookShelfChangeHandler={props.bookShelfChangeHandler}
               book={props.book}
               bookShelf={props.bookShelf}/>
             </div>
