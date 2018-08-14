@@ -11,7 +11,6 @@ class BooksApp extends Component {
   }
 
   moveShelf = (book, targetShelf) => {
-    console.log("moveShelf activated")
     BooksAPI.update(book, targetShelf).then(() => {
       book.bookShelf=targetShelf;
       this.setState(state => ({allBooks: state.allBooks.filter(b => b.id !== book.id).concat([book])}))
@@ -22,7 +21,6 @@ class BooksApp extends Component {
       BooksAPI.getAll().then( (allBooks)=>{
       	this.setState( { allBooks })
 	  })
-    console.log("allBooks is currently", this.state.allBooks)
   }
   render() {
     return (
@@ -37,10 +35,8 @@ class BooksApp extends Component {
             )} />
             <Route path="/search" render={()=> (
                 <SearchBooks
-                  onToggleSearchHandler={this.toggleSearchHandler}
                   moveShelf={this.moveShelf}
                   allBooks={this.state.allBooks}/>
-
             )} />
       </div>
     )

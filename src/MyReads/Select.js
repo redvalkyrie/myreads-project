@@ -2,7 +2,6 @@ import React, { Component }	 from 'react'
 class Select extends Component {
 
 	handleChange = (event) => {
-      console.log(event.target.value)
       if(event.target.value !== 'move' && event.target.value !== 'none'){
           this.props.moveShelf(this.props.book, event.target.value);
       }

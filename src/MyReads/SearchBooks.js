@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import ListBooks from './ListBooks'
 import * as BooksAPI from './BooksAPI'
+import Book from './Book'
 
 class SearchBooks extends Component {
   state = {
@@ -18,41 +19,12 @@ class SearchBooks extends Component {
         } else {
           this.setState({ searchResultsList: searchResultsList })
         }
-          this.shelfChecker(this.props.allBooks, this.state.searchResultsList)
       })
     } else {
       this.setState({ searchResultsList: [] })
     }
   }
-
-  shelfChecker = (mainList, queryList) => {
-    console.log("searchChecker has been activated.")
-    queryList.map((book) => {
-      let bookShelf = 'none';
-      console.log("this book is ", book)
-      let mainIndex = mainList.indexOf(book.id)
-      console.log("mainIndex is ", mainIndex)
-      if(mainIndex > -1) {
-        let mainBook = mainList[mainIndex];
-        console.log("mainBook is ",mainBook)
-        bookShelf = mainBook.bookShelf;
-      }
-      book.bookShelf = bookShelf;
-      return queryList;
-    })
-  }
-
   render() {
-    let searchCheck;
-    console.log('searchResults', this.state.searchQuery)
-    console.log('searchResultsList', this.state.searchResultsList)
-    if(this.state.searchQuery && this.state.searchResultsList !== []) {
-      searchCheck = <ListBooks books={this.state.searchResultsList}
-                      moveShelf={this.props.moveShelf}/>
-    } else {
-      searchCheck = <p>No results to display!</p>
-    }
-
     return (
       <div className="list-books-content">
   	    <div className="search-books">
@@ -76,7 +48,23 @@ class SearchBooks extends Component {
         <div className="bookshelf">
           <h2 className="bookshelf-title">Search Results</h2>
           <p> searchResults is {this.state.searchQuery}</p>
-          {searchCheck}
+          <ul className='books-grid'>
+            //checks books to see if on a bookshelf in main page
+            {this.state.searchResultsList.map( book => {
+              let bookShelf = 'none';
+              this.props.allBooks.map(b => (
+                b.id === book.id ? bookShelf = b.bookShelf : ''
+              ))
+              return(
+                <li key={book.id}>
+                  <Book
+                    moveShelf={this.props.moveShelf}
+                    book={book}
+                    bookShelf={bookShelf}/>
+                </li>
+              )
+            })}
+          </ul>
         </div>
       </div>
     </div>

@@ -98,7 +98,7 @@ body, .app {
   flex-direction: column;
 }
 .search-books-bar {
-  position: fixed;
+  /* position: fixed; */
   width: 100%;
   top: calc(4.4em);
   left: 0;
