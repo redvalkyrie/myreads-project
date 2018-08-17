@@ -35,7 +35,7 @@ class BooksApp extends Component {
             )} />
             <Route path="/search" render={()=> (
                 <SearchBooks
-                  moveShelf={this.moveShelf}
+                  onMoveShelf={this.moveShelf}
                   allBooks={this.state.allBooks}/>
             )} />
       </div>
