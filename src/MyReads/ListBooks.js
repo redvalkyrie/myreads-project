@@ -5,7 +5,7 @@ class ListBooks extends Component {
   render() {
     let displayBooks;
     if(this.props.books === undefined || this.props.books.length === null || this.props.books.length === 0) {
-      displayBooks = <p> This shelf is empty!</p>
+      displayBooks = <h3> This shelf is empty!</h3>
     } else {
       displayBooks =
       <ul className='books-grid'>
@@ -14,7 +14,7 @@ class ListBooks extends Component {
             <Book
               moveShelf={this.props.moveShelf}
               book={book}
-              bookShelf={book.bookShelf}/>
+              shelf={book.shelf}/>
 				  </li>
     		))}
   	  </ul>

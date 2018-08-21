@@ -1,38 +1,40 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ListBooks from './ListBooks'
 import { Link } from 'react-router-dom'
 
-const Homepage = (props) => {
+class Homepage extends Component {
+  render() {
   return (
     <div className="list-books">
       <div className="list-books-content">
         <div className="bookshelf">
           <h2 className="bookshelf-title">Currently Reading</h2>
-          <ListBooks books={props.allBooks.filter((book) => book.bookShelf ==='currentlyReading')}
-          moveShelf={props.moveShelf}
-          bookShelf='currentlyReading' />
+          <ListBooks books={this.props.allBooks.filter((book) => book.shelf ==='currentlyReading')}
+          moveShelf={this.props.moveShelf}
+          shelf='currentlyReading' />
         </div>
         <div className="bookshelf">
           <h2 className="bookshelf-title">Want to Read</h2>
-          <ListBooks books={props.allBooks.filter((book) => book.bookShelf ==='wantToRead')}
-          moveShelf={props.moveShelf}
-          bookShelf='wantToRead' />
+          <ListBooks books={this.props.allBooks.filter((book) => book.shelf ==='wantToRead')}
+          moveShelf={this.props.moveShelf}
+          shelf='wantToRead' />
         </div>
         <div className="bookshelf">
           <h2 className="bookshelf-title">Read</h2>
-          <ListBooks books={props.allBooks.filter((book) => book.bookShelf ==='read')}
-          moveShelf={props.moveShelf}
-          bookShelf='read' />
+          <ListBooks books={this.props.allBooks.filter((book) => book.shelf ==='read')}
+          moveShelf={this.props.moveShelf}
+          shelf='read' />
         </div>
         <div className="open-search">
           <Link
             to="/search"
             className="search-button"
             >Add a book</Link>
-          </div>
         </div>
       </div>
+    </div>
   )
 }
+}
 
-export default Homepage;
+export default Homepage

@@ -12,7 +12,7 @@ class BooksApp extends Component {
 
   moveShelf = (book, targetShelf) => {
     BooksAPI.update(book, targetShelf).then(() => {
-      book.bookShelf=targetShelf;
+      book.shelf=targetShelf;
       this.setState(state => ({allBooks: state.allBooks.filter(b => b.id !== book.id).concat([book])}))
     })
   }
@@ -25,19 +25,19 @@ class BooksApp extends Component {
   render() {
     return (
       <div className="app">
-        <div className="list-books-title">
-          <h1>MyReads</h1>
-        </div>
+      <div className="list-books-title">
+        <h1>MyReads</h1>
+      </div>
         <Route exact path="/" render={() => (
 	        <Homepage
             allBooks={this.state.allBooks}
             moveShelf={this.moveShelf}/>
             )} />
-            <Route path="/search" render={()=> (
-                <SearchBooks
-                  onMoveShelf={this.moveShelf}
-                  allBooks={this.state.allBooks}/>
-            )} />
+        <Route path="/search" render={()=> (
+            <SearchBooks
+              onMoveShelf={this.moveShelf}
+              allBooks={this.state.allBooks}/>
+        )} />
       </div>
     )
   }

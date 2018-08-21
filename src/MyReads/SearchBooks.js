@@ -25,8 +25,7 @@ class SearchBooks extends Component {
   }
   render() {
     return (
-      <div className="list-books-content">
-  	    <div className="search-books">
+  	   <div className="search-books">
          <div className="search-books-bar">
            <Link
             className="close-search"
@@ -42,27 +41,25 @@ class SearchBooks extends Component {
              aria-label="Search by title or author"
   		     />
         </div>
-  		</div>
-      <div className="search-books-results">
-        <div className="bookshelf">
-          <h2 className="bookshelf-title">Search Results</h2>
-          <p> searchResults is {this.state.searchQuery}</p>
-          <ul className='books-grid'>
-            {this.state.searchResultsList.map( book => {
-              let bookShelf = 'none';
-              this.props.allBooks.map(b => (
-                b.id === book.id ? bookShelf = b.bookShelf : ''
-              ))
-              return(
-                <li key={book.id}>
-                  <Book
-                    moveShelf={this.props.moveShelf}
-                    book={book}
-                    bookShelf={bookShelf}/>
-                </li>
-              )
-            })}
-          </ul>
+        <div className="search-books-results">
+          <div className="bookshelf">
+            <h2 className="bookshelf-title">Search Results</h2>
+            <ul className='books-grid'>
+              {this.state.searchResultsList.map( book => {
+                let shelf = 'none';
+                this.props.allBooks.map(b => (
+                  b.id === book.id ? shelf = b.shelf : ''
+                ))
+                return(
+                  <li key={book.id}>
+                    <Book
+                      moveShelf={this.props.onMoveShelf}
+                      book={book}
+                      shelf={shelf}/>
+                  </li>
+                )
+              })}
+            </ul>
         </div>
       </div>
     </div>
