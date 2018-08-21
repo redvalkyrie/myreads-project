@@ -20,14 +20,12 @@ This program is created to simulate a book app in which a user may have books
 ## Installation
 All files must be cloned or downloaded from https://github.com/redvalkyrie/myreads-project.
 
-With npm open, change directories into the project file(cd myreads-app).  Within
- the project folder, use npm start to begin the development server.  Within npm,
- a list of addresses for the program to be run through a web browser.  If a browser
- window with the program is not opened automatically, the user may use either of these
- addresses to use the program.
+With npm open, change directories into the project file(cd myreads-project).  Within
+ the project folder, use npm start to begin the development server. A list of addresses is provided within the npm CLI for the program to be run through a web browser.  If a browser window with the program is not opened automatically (e.g. http://localhost:3000/), the user may use either of these addresses to use the program.
 
 ## Dependencies
 1. npm (https://www.npmjs.com/)
 2. node (https://nodejs.org/en/)
+
 ## Contributing
 Original project code obtained from https://github.com/udacity/reactnd-project-myreads-starter.
