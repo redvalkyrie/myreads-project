@@ -1,5 +1,5 @@
 # MyReads Project
-Amber Fuller 08-21-2018
+08-21-2018
 
 ## Table of Contents
 * [Synopsis](#Synopsis)
